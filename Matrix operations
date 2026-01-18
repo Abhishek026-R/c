@@ -1,0 +1,129 @@
+#include <stdio.h>
+#include<stdlib.h>
+
+#define MAX 10
+
+
+void input(int mat[MAX][MAX], int rows, int cols) {
+    printf("Enter elements of matrix (%d x %d):\n", rows, cols);
+    for (int i = 0; i < rows; i++) {
+        for (int j = 0; j < cols; j++) {
+            scanf("%d", &mat[i][j]);
+        }
+    }
+}
+
+
+void display(int mat[MAX][MAX], int rows, int cols) {
+    for (int i = 0; i < rows; i++) {
+        for (int j = 0; j < cols; j++) {
+            printf("%d\t", mat[i][j]);
+        }
+        printf("\n");
+    }
+}
+
+
+void add(int A[MAX][MAX], int B[MAX][MAX], int res[MAX][MAX], int rows, int cols) {
+    for (int i = 0; i < rows; i++) {
+        for (int j = 0; j < cols; j++) {
+            res[i][j] = A[i][j] + B[i][j];
+        }
+    }
+}
+
+
+void multiply(int A[MAX][MAX], int B[MAX][MAX], int res[MAX][MAX], int r1, int c1, int c2) {
+    for (int i = 0; i < r1; i++) {
+        for (int j = 0; j < c2; j++) {
+            res[i][j] = 0;
+            for (int k = 0; k < c1; k++) {
+                res[i][j] += A[i][k] * B[k][j];
+            }
+        }
+    }
+}
+
+
+void transpose(int A[MAX][MAX], int res[MAX][MAX], int rows, int cols) {
+    for (int i = 0; i < rows; i++) {
+        for (int j = 0; j < cols; j++) {
+            res[j][i] = A[i][j];
+        }
+    }
+}
+
+int main() {
+    int A[MAX][MAX], B[MAX][MAX], res[MAX][MAX];
+    int rowsA, colsA, rowsB, colsB,ch,p;
+
+  
+    printf("Enter rows and columns of Matrix A: ");
+    scanf("%d %d", &rowsA, &colsA);
+    input(A, rowsA, colsA);
+
+    printf("Enter rows and columns of Matrix B: ");
+    scanf("%d %d", &rowsB, &colsB);
+    input(B, rowsB, colsB);
+
+    printf("\nMatrix A:\n");
+    display(A, rowsA, colsA);
+
+    printf("\nMatrix B:\n");
+    display(B, rowsB, colsB);
+    
+    for(p=0;p<=3;p++){
+    
+
+    printf("\n\n\n1.MATRIX ADDITION\n 2.MATRIX MULTIPLICATION\n 3.MATRIX TRANSPOSEN\n 4.EXIT\n Enter Your Choice:");
+    scanf("%d",&ch);
+
+    switch(ch)
+    { 
+    case 1:
+   
+    if (rowsA == rowsB && colsA == colsB) {
+        add(A, B, res, rowsA, colsA);
+        printf("\nAddition of A and B:\n");
+        display(res, rowsA, colsA);
+    } else {
+        printf("\nMatrix addition not possible (dimension mismatch).\n");
+    }
+    break;
+
+    case 2:
+    
+    if (colsA == rowsB) {
+        multiply(A, B, res, rowsA, colsA, colsB);
+        printf("\nMultiplication of A and B:\n");
+        display(res, rowsA, colsB);
+    } else {
+        printf("\nMatrix multiplication not possible (dimension mismatch).\n");
+    }
+    break;
+
+    case 3:
+
+    
+    transpose(A, res, rowsA, colsA);
+    printf("\nTranspose of Matrix A:\n");
+    display(res, colsA, rowsA);
+
+  
+    transpose(B, res, rowsB, colsB);
+    printf("\nTranspose of Matrix B:\n");
+    display(res, colsB, rowsB);
+    break;
+    
+    case 4:
+    exit(0);
+    break;
+    
+
+    default:
+    printf("invalid choice\n");
+    break;
+    }}
+
+    return 0;
+}
